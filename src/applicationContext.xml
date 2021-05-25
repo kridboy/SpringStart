@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath:resources/sport.properties"/>
+
+    <!-- Define your beans here -->
+    <bean id="myFortuneService" class="com.keisse.springdemo.configwithxml.impl.RealFortuneService">
+    </bean>
+    <bean id="myOtherCoach" class="com.keisse.springdemo.configwithxml.impl.CricketCoach"
+          destroy-method="destroyMethod"
+    >
+        <!--set up setter injection, note that this is previously created fortuneservice bean!-->
+        <property name="fortuneService" ref="myFortuneService"/>
+
+        <!--hardcoded property injection-->
+<!--    <property name="email" value="some@email.Com"/>-->
+<!--    <property name="team" value="team 1"/>-->
+
+        <!--property injection with properties file  -->
+        <property name="email" value="${foo.email}"/>
+        <property name="team" value="${foo.team}"/>
+    </bean>
+    <!--   singleton scope is the standard scope for a bean, this means all calls to bean will return same object!
+        prototype for example will return new object for each call to bean -->
+    <!--There is also room for custom hook methods for init and clean up when container is started and stopped, protypes
+        not get closed howeverç-->
+    <bean id="myCoach" class="com.keisse.springdemo.configwithxml.impl.BaseballCoach"
+          scope="prototype"
+          init-method="initMethod"
+    >
+
+        <!--set up constructor injection, note that this is previously created fortuneservice bean!-->
+        <constructor-arg ref="myFortuneService" />
+    </bean>
+</beans>
+
+
+
+
+
