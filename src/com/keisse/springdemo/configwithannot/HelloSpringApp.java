@@ -19,6 +19,7 @@ public class HelloSpringApp {
 
             System.out.println(theFirstCoach.getDailyWorkout());
             System.out.println(theSecondCoach.getDailyWorkout());
+            System.out.println(theFirstCoach.getDailyFortune());// zonder downcasting??
         }
     }
 
