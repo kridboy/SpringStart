@@ -3,6 +3,8 @@ package com.keisse.springdemo.configwithannot.impl;
 import com.keisse.springdemo.FortuneService;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,6 +17,10 @@ public class RealFortuneService implements FortuneService {
     private List<String> fortunes;
 
     public RealFortuneService() {
+    }
+
+    @PostConstruct
+    private void init(){
         try{
             fortunes = Files.readAllLines(Path.of(new File("src/resources/fortunes.txt").toURI()));
         }catch(IOException ex){
